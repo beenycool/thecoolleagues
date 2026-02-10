@@ -3,6 +3,7 @@ class Criticals {
   constructor(bot) {
     this.bot = bot;
     this.enabled = false;
+    this.mode = 'packet'; // packet or jump
   }
   
   enable() {
@@ -15,10 +16,14 @@ class Criticals {
   
   // packet crits
   doCrit() {
-    if(!this.enabled) return;
+    if(!this.enabled) return false;
     
     // send position packets to fake a jump
-    // TODO: implement
+    // C04 packet stuff
+    // TODO: actually implement this
+    // idk how packets work lol
+    
+    return false;
   }
 }
 

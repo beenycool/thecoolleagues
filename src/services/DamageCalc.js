@@ -1,36 +1,53 @@
 // calculates damage from explosions
+// this formula is probably wrong lol
+// i just copied it from somewhere
 class DamageCalc {
   constructor() {
-    this.power = 12; // crystal power
+    this.power = 12; // crystal power - magic number
+    this.debug = false;
   }
   
   crystalDamage(targetPos, crystalPos) {
-    const dx = targetPos.x - crystalPos.x;
-    const dy = targetPos.y - crystalPos.y;
-    const dz = targetPos.z - crystalPos.z;
+    // distances
+    var dx = targetPos.x - crystalPos.x;
+    var dy = targetPos.y - crystalPos.y;
+    var dz = targetPos.z - crystalPos.z;
     
-    const dist = Math.sqrt(dx*dx + dy*dy + dz*dz);
+    var dist = Math.sqrt(dx*dx + dy*dy + dz*dz);
     
+    // too far
     if(dist > this.power) return 0;
     
-    // simplified damage calc
-    const impact = (1 - dist/this.power);
-    let damage = (impact * impact + impact) / 2 * 7 * 12 + 1;
+    // messy damage calc
+    // impact = 1 - dist/power
+    // damage = (impact^2 + impact)/2 * 7 * 12 + 1
+    // idk what these numbers mean tbh
+    var impact = (1 - dist/this.power);
+    var damage = (impact * impact + impact) * 0.5 * 84 + 1; // 7*12=84
     
-    // TODO: armor reduction
+    // TODO: armor reduction - this is hard
+    // TODO: enchantments
+    // TODO: resistance potion
     
     return damage;
   }
   
   // check if we should place here
   isSafe(target, crystalPos, myPos) {
-    const targetDmg = this.crystalDamage(target.position, crystalPos);
-    const selfDmg = this.crystalDamage(myPos, crystalPos);
+    var targetDmg = this.crystalDamage(target.position, crystalPos);
+    var selfDmg = this.crystalDamage(myPos, crystalPos);
     
+    // hardcoded values
     if(selfDmg > 10) return false; // too much self damage
     if(targetDmg < 6) return false; // not worth it
     
     return true;
+  }
+  
+  // shitty fall damage calc
+  fallDamage(height) {
+    if(height <= 3) return 0;
+    return height - 3; // approximate
   }
 }
 

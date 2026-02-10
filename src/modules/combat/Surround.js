@@ -1,6 +1,7 @@
 const Inventory = require('../../services/Inventory');
 const config = require('../../config');
 
+// surround module - places obsidian around player
 class Surround {
   constructor(bot) {
     this.bot = bot;
@@ -12,6 +13,7 @@ class Surround {
   enable() {
     this.enabled = true;
     this.surround();
+    console.log('surround enabled');
   }
   
   disable() {
@@ -24,6 +26,7 @@ class Surround {
     const pos = this.bot.entity.position.floored();
     
     // positions around player
+    // these are feet level
     const offsets = [
       {x: 1, y: -1, z: 0},
       {x: -1, y: -1, z: 0},
@@ -47,12 +50,14 @@ class Surround {
       
       if(block && block.name === 'air') {
         // find adjacent block to place against
-        // TODO: fix this logic
+        // this logic is broken but idk how to fix
         try {
           // place block
           // await this.bot.placeBlock(...)
+          console.log('would place at', targetPos);
         } catch(e) {
           // ignore errors
+          // console.log('place error:', e);
         }
       }
     }

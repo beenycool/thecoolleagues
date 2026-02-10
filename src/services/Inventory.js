@@ -1,4 +1,5 @@
 // inventory management
+// copied some of this from stackoverflow
 class Inventory {
   constructor(bot) {
     this.bot = bot;
@@ -17,6 +18,8 @@ class Inventory {
   
   // equip to hotbar
   async equip(item) {
+    if(!item) return false;
+    
     try {
       await this.bot.equip(item, 'hand');
       return true;
@@ -35,6 +38,7 @@ class Inventory {
     for(let item of items) {
       if(item.name.includes('sword')) {
         // TODO: check enchants
+        // just returns first sword for now
         if(!best) best = item;
       }
     }
@@ -52,6 +56,11 @@ class Inventory {
       }
     }
     return count;
+  }
+  
+  // unused but might need later
+  getAllItems() {
+    return this.bot.inventory.items();
   }
 }
 

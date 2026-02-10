@@ -1,4 +1,5 @@
 // no fall damage
+// this might not work idk
 class NoFall {
   constructor(bot) {
     this.bot = bot;
@@ -8,6 +9,7 @@ class NoFall {
   enable() {
     this.enabled = true;
     this.bot.on('move', this.onMove.bind(this));
+    console.log('nofall enabled');
   }
   
   disable() {
@@ -19,8 +21,10 @@ class NoFall {
     if(!this.enabled) return;
     
     // if falling fast, place water or mlgbucket
-    if(this.bot.entity.velocity.y < -0.5) {
+    var velY = this.bot.entity.velocity.y;
+    if(velY < -0.5) {
       // TODO: implement MLG
+      // console.log('falling!', velY);
     }
   }
 }

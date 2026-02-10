@@ -4,6 +4,7 @@ class AutoCity {
     this.bot = bot;
     this.enabled = false;
     this.target = null;
+    this.mining = [];
   }
   
   enable() {
@@ -20,8 +21,14 @@ class AutoCity {
     
     // TODO: find enemy surround blocks
     // mine them with packets
+    // this is broken rn
     
     setTimeout(() => this.run(), 50);
+  }
+  
+  findSurroundBlocks(target) {
+    // TODO: find obsidian around target
+    return [];
   }
 }
 

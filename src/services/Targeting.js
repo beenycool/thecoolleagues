@@ -4,6 +4,7 @@ const config = require('../config');
 class Targeting {
   constructor(bot) {
     this.bot = bot;
+    this.lastTarget = null;
   }
   
   findTargets() {
@@ -31,7 +32,19 @@ class Targeting {
   
   getBestTarget() {
     const targets = this.findTargets();
-    return targets[0] || null;
+    if(targets.length > 0) {
+      this.lastTarget = targets[0];
+      return targets[0];
+    }
+    return null;
+  }
+  
+  // check if target is valid
+  isValidTarget(entity) {
+    if(!entity) return false;
+    if(entity.type !== 'player') return false;
+    if(entity.username === this.bot.username) return false;
+    return true;
   }
 }
 

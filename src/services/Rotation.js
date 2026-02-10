@@ -1,24 +1,32 @@
 // handles rotations
+// math is hard lol
 class Rotation {
   constructor(bot) {
     this.bot = bot;
   }
   
   lookAt(pos) {
-    const dx = pos.x - this.bot.entity.position.x;
-    const dy = pos.y - this.bot.entity.position.y;
-    const dz = pos.z - this.bot.entity.position.z;
+    var dx = pos.x - this.bot.entity.position.x; // using var cause why not
+    var dy = pos.y - this.bot.entity.position.y;
+    var dz = pos.z - this.bot.entity.position.z;
     
-    const dist = Math.sqrt(dx*dx + dz*dz);
-    const yaw = Math.atan2(-dx, -dz);
-    const pitch = Math.atan2(dy, dist);
+    var dist = Math.sqrt(dx*dx + dz*dz);
+    var yaw = Math.atan2(-dx, -dz);
+    var pitch = Math.atan2(dy, dist);
     
     this.bot.look(yaw, pitch, true);
   }
   
   // look at entity
   lookAtEntity(entity) {
-    this.lookAt(entity.position.offset(0, 1.6, 0));
+    if(!entity) return;
+    this.lookAt(entity.position.offset(0, 1.6, 0)); // eye level
+  }
+  
+  // unused but keeping for later
+  smoothLookAt(pos, speed) {
+    // TODO: implement smooth rotation
+    this.lookAt(pos);
   }
 }
 

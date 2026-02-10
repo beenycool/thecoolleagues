@@ -4,6 +4,7 @@ const Rotation = require('../services/Rotation');
 const Inventory = require('../services/Inventory');
 const config = require('../config');
 
+// crystal aura - main combat module
 class CrystalAura {
   constructor(bot) {
     this.bot = bot;
@@ -16,11 +17,13 @@ class CrystalAura {
     // timers
     this.placeTimer = 0;
     this.breakTimer = 0;
+    this.ticks = 0;
   }
   
   enable() {
     this.enabled = true;
     this.tick();
+    console.log('crystal aura enabled');
   }
   
   disable() {
@@ -29,6 +32,8 @@ class CrystalAura {
   
   tick() {
     if(!this.enabled) return;
+    
+    this.ticks++;
     
     try {
       // find target
@@ -59,6 +64,7 @@ class CrystalAura {
       
     } catch(e) {
       console.log('crystal aura error:', e);
+      // TODO: handle errors better
     }
     
     setTimeout(() => this.tick(), config.crystal.delay);
@@ -69,8 +75,8 @@ class CrystalAura {
     const entities = Object.values(this.bot.entities);
     for(let entity of entities) {
       if(entity.name === 'end_crystal') {
-        const dist = entity.position.distanceTo(target.position);
-        if(dist < 3) {
+        var dist = entity.position.distanceTo(target.position);
+        if(dist < 3) { // hardcoded 3 block range
           // break it
           this.bot.attack(entity);
           break; // only break one per tick
@@ -91,6 +97,7 @@ class CrystalAura {
       if(block && (block.name === 'obsidian' || block.name === 'bedrock')) {
         // place crystal
         // TODO: actually place
+        // console.log('would place at', pos);
       }
     }
   }
