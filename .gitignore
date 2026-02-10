@@ -1,0 +1,4 @@
+meteor-client/
+node_modules/
+.env
+*.log
