@@ -1,42 +1,46 @@
-// config for the bot
-// this is a mess but it works
+// config - ported from meteor defaults
 module.exports = {
+  // server connection
   host: 'localhost',
   port: 25565,
   
-  // crystal aura settings - these numbers are kinda random ngl
+  // crystal aura settings (from meteor CrystalAura.java defaults)
   crystal: {
+    // targeting
+    targetRange: 10,
+    
+    // place settings
     placeRange: 4.5,
-    breakRange: 5.0,
+    placeWallsRange: 4.5,
+    placeDelay: 0,
     minDamage: 6,
-    maxSelfDamage: 10,
-    delay: 50,
-    // hacky value idk if this is good
-    someRandomNumber: 12
+    maxSelfDamage: 6,
+    antiSuicide: true,
+    
+    // break settings
+    breakRange: 4.5,
+    breakWallsRange: 4.5,
+    breakDelay: 0,
+    
+    // faceplace
+    facePlace: true,
+    facePlaceHealth: 8,
+    
+    // delays (ticks)
+    placeTimerDelay: 2,
+    breakTimerDelay: 2,
+    placingTimerDelay: 4, // prevent multiplace
+    
+    // tick delay in ms
+    delay: 50
   },
   
-  // surround settings  
-  surround: {
-    blocksPerTick: 2,
-    center: true,
-    doubleHeight: false,
-    // hardcoded delay cause why not
-    delay: 100
-  },
-  
-  // targeting stuff
+  // targeting
   target: {
     range: 10,
-    sortBy: 'distance',
-    // another magic number
-    timeout: 5000
+    sortBy: 'distance'
   },
   
-  // random stuff i added
-  debug: true,
-  maxPing: 200,
-  
-  // TODO: move these somewhere else
-  webRange: 4,
-  trapRange: 3
+  // debug
+  debug: false
 };
