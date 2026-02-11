@@ -1,8 +1,9 @@
 const Targeting = require('../services/Targeting');
 const DamageCalc = require('../services/DamageCalc');
 const Rotation = require('../services/Rotation');
-const Inventory = require('../services/Inventory');
-const config = require('../config');
+const Inventory = require('../../services/Inventory');
+const config = require('../../config');
+const Vec3 = require('vec3');
 
 // crystal aura - main combat module
 class CrystalAura {
@@ -96,9 +97,38 @@ class CrystalAura {
       const block = this.bot.blockAt(pos.offset(0, -1, 0));
       if(block && (block.name === 'obsidian' || block.name === 'bedrock')) {
         // place crystal
-        // TODO: actually place
-        // console.log('would place at', pos);
+        this.botPlaceBlock(pos.offset(0, -1, 0), new Vec3(0, 1, 0));
       }
+    }
+  }
+  
+  // bot place block - equips crystal and places it
+  async botPlaceBlock(blockPos, faceVector) {
+    // find crystal in inventory
+    const crystal = this.inventory.findItem('end_crystal');
+    if(!crystal) {
+      // console.log('no crystals lol');
+      return false;
+    }
+    
+    try {
+      // equip crystal
+      await this.inventory.equip(crystal);
+      
+      // get block to place on
+      const block = this.bot.blockAt(blockPos);
+      if(!block) {
+        return false;
+      }
+      
+      // place the crystal
+      await this.bot.placeBlock(block, faceVector);
+      console.log('placed crystal at', blockPos);
+      return true;
+      
+    } catch(e) {
+      console.log('place failed:', e.message);
+      return false;
     }
   }
 }
